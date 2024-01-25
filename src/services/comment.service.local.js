@@ -11,7 +11,7 @@ export const commentService = {
     remove,
     getEmptyComment
 }
-window.cs = commentService
+// window.cs = commentService
 
 const gDemoComments = [
     {

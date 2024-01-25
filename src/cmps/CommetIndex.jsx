@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { commentService } from "../services/comment.service.local"
+import { commentService } from "../services/comment.service"
 import { CommentList } from "./CommentList"
 import { CommentEdit } from "./CommentEdit"
 

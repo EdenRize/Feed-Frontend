@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { commentService } from "../services/comment.service.local"
+import { commentService } from "../services/comment.service"
 
 
 export function CommentEdit({ onAddComment }) {
