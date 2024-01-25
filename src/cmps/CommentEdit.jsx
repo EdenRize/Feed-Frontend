@@ -1,33 +1,35 @@
 import { useState } from "react"
+import { commentService } from "../services/comment.service.local"
 
 
 export function CommentEdit({ onAddComment }) {
-    const [email, setEmail] = useState('')
-    const [txt, setTxt] = useState('')
+    const [comment, setComment] = useState(commentService.getEmptyComment())
 
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
 
-        switch (field) {
-            case 'email':
-                setEmail(value)
+        switch (target.type) {
+            case 'number':
+            case 'range':
+                value = +value
                 break
-            case 'txt':
-                setTxt(value)
+            case 'checkbox':
+                value = target.checked
                 break
             default:
                 break
         }
+        setComment((prevComment) => ({ ...prevComment, [field]: value, }))
     }
 
     function handleSubmit(ev) {
         ev.preventDefault()
-        onAddComment(email, txt)
-        setEmail('')
-        setTxt('')
+        onAddComment(comment)
+        setComment(commentService.getEmptyComment())
     }
 
+    const { email, txt } = comment
     return (
         <section className="comment-edit">
             <form onSubmit={handleSubmit}>
