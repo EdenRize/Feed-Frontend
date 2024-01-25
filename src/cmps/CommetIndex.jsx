@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { commentService } from "../services/comment.service.local"
+import { CommentList } from "./CommentList"
 
 export function CommetIndex() {
 
@@ -18,10 +19,12 @@ export function CommetIndex() {
         }
     }
 
-    console.log(comments)
+    if (!comments) return <div>Loading...</div>
+    if (!comments.length) return <div>No comments match this search</div>
+
     return (
         <section className="comment-index">
-            hi from index
+            <CommentList comments={comments} />
         </section>
     )
 }
