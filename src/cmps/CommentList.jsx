@@ -2,11 +2,9 @@ import { CommentPreview } from "./CommentPreview";
 
 export function CommentList({ comments }) {
     return (
-        <ul className="comment-list">
+        <ul className="clean-list comment-list">
             {comments.map(comment =>
-                <li key={comment._id}>
-                    <CommentPreview comment={comment} />
-                </li>
+                <CommentPreview key={comment._id} comment={comment} />
             )}
         </ul>
     )
