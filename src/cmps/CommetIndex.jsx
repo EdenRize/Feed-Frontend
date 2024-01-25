@@ -13,7 +13,6 @@ export function CommetIndex() {
         loadComments()
     }, [])
 
-    //render every 30 min so that the user will see the change in createdAt
     useEffect(() => {
         intervalIdRef.current = setInterval(loadComments, 30 * 60 * 1000)
 
