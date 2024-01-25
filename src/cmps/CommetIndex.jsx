@@ -2,16 +2,22 @@ import { useEffect, useRef, useState } from "react"
 import { commentService } from "../services/comment.service"
 import { CommentList } from "./CommentList"
 import { CommentEdit } from "./CommentEdit"
+import { CommentFilter } from "./CommentFilter"
 
 export function CommetIndex() {
 
     const [comments, setComments] = useState(null)
+    const [filterBy, setFilterBy] = useState({ txt: '' })
     let intervalIdRef = useRef()
 
 
     useEffect(() => {
-        loadComments()
+        loadComments(filterBy)
     }, [])
+
+    useEffect(() => {
+        loadComments(filterBy)
+    }, [filterBy])
 
     useEffect(() => {
         intervalIdRef.current = setInterval(loadComments, 30 * 60 * 1000)
@@ -21,9 +27,9 @@ export function CommetIndex() {
         }
     }, [])
 
-    async function loadComments() {
+    async function loadComments(filterBy) {
         try {
-            const loadedComments = await commentService.query()
+            const loadedComments = await commentService.query(filterBy)
             setComments(loadedComments)
         } catch (err) {
             err => console.log('err:', err)
@@ -39,6 +45,24 @@ export function CommetIndex() {
         }
     }
 
+    function handleChange({ target }) {
+        const field = target.name
+        let value = target.value
+
+        switch (target.type) {
+            case 'number':
+            case 'range':
+                value = +value
+                break
+            case 'checkbox':
+                value = target.checked
+                break
+            default:
+                break
+        }
+        setFilterBy(prevFilter => ({ ...prevFilter, [field]: value }))
+    }
+
 
 
     if (!comments) return <div>Loading...</div>
@@ -47,6 +71,7 @@ export function CommetIndex() {
     return (
         <section className="comment-index">
             <CommentEdit onAddComment={addComment} />
+            <CommentFilter filterBy={filterBy} onSetFilterBy={handleChange} />
             <CommentList comments={comments} />
         </section>
     )
