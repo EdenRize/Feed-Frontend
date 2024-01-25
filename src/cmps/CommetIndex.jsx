@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { commentService } from "../services/comment.service.local"
 import { CommentList } from "./CommentList"
 import { CommentEdit } from "./CommentEdit"
+import avatarService from "../services/avatar.service"
 
 export function CommetIndex() {
 
@@ -33,6 +34,8 @@ export function CommetIndex() {
 
     async function addComment(comment) {
         try {
+            const gravatarUrl = avatarService.getGravatarUrl(comment.email)
+            comment.imgUrl = gravatarUrl
             const addedComment = await commentService.save(comment)
             setComments((prevComments) => ([addedComment, ...prevComments]))
         } catch (err) {
