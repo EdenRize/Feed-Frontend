@@ -29,6 +29,7 @@ export function CommentEdit({ onAddComment }) {
         setComment(commentService.getEmptyComment())
     }
 
+    const { email, txt } = comment
     return (
         <section className="comment-edit">
             <form onSubmit={handleSubmit}>

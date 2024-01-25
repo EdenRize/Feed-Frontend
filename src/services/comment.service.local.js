@@ -74,11 +74,10 @@ async function save(comment) {
 
 function getEmptyComment() {
     return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
+        email: '',
+        txt: '',
     }
 }
-
 
 // TEST DATA
 // storageService.post(STORAGE_KEY, {vendor: 'Subali Rahok 2', price: 980}).then(x => console.log(x))
