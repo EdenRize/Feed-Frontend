@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { commentService } from "../services/comment.service"
 import { CommentList } from "./CommentList"
 import { CommentEdit } from "./CommentEdit"
@@ -6,9 +6,20 @@ import { CommentEdit } from "./CommentEdit"
 export function CommetIndex() {
 
     const [comments, setComments] = useState(null)
+    let intervalIdRef = useRef()
+
 
     useEffect(() => {
         loadComments()
+    }, [])
+
+    //render every 30 min so that the user will see the change in createdAt
+    useEffect(() => {
+        intervalIdRef.current = setInterval(loadComments, 30 * 60 * 1000)
+
+        return () => {
+            clearInterval(intervalIdRef.current)
+        }
     }, [])
 
     async function loadComments() {
