@@ -67,6 +67,7 @@ async function save(comment) {
     } else {
         // Later, owner is set by the backend
         // comment.owner = userService.getLoggedinUser()
+        comment.createdAt = Date.now()
         savedComment = await storageService.post(STORAGE_KEY, comment)
     }
     return savedComment
